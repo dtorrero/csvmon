@@ -31,3 +31,14 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/csvmon/csvmon:latest
+  
+  deploy:
+    runs-on: self-hosted
+  
+    steps:
+    - name: Deploy to docker on self-hosted runner
+      uses: docker/deploy-to-docker-action@v2
+      with:
+        docker_host: tcp://docker:2375
+        docker_context: .
+        image_name: ghcr.io/${{ github.repository_owner }}/csvmon/csvmon:latest
